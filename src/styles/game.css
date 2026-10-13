@@ -1,0 +1,423 @@
+/* =========================================================
+   كنوز الجزائر - شاشة اللعب وأنواع المراحل المتعددة
+   ========================================================= */
+
+.game-container {
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  max-width: 100%;
+}
+
+/* ترويسة المرحلة الحالية */
+.stage-top-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--bg-card);
+  border: 1px solid var(--border-glass);
+  padding: 10px 14px;
+  border-radius: var(--radius-md);
+}
+
+.stage-wilaya-info {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.back-to-map-btn {
+  background: rgba(255, 255, 255, 0.08);
+  border: none;
+  color: var(--text-main);
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radius-full);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.back-to-map-btn:hover {
+  background: var(--c-primary);
+}
+
+.stage-title-wrap {
+  display: flex;
+  flex-direction: column;
+}
+
+.stage-wilaya-name {
+  font-size: 0.95rem;
+  font-weight: 800;
+  color: var(--text-gold);
+}
+
+.stage-num-badge {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+.stage-category-pill {
+  background: rgba(217, 119, 6, 0.2);
+  border: 1px solid var(--c-gold);
+  color: #fde047;
+  padding: 4px 10px;
+  border-radius: var(--radius-full);
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+/* بطاقة السؤال الأساسية والصورة */
+.question-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-glass);
+  border-radius: var(--radius-lg);
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  box-shadow: var(--shadow-card);
+}
+
+.stage-media-wrap {
+  width: 100%;
+  height: 220px;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  position: relative;
+  background: #0f172a;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.stage-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.stage-image:hover {
+  transform: scale(1.03);
+}
+
+.media-badge-tag {
+  position: absolute;
+  bottom: 8px;
+  right: 8px;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(5px);
+  padding: 4px 10px;
+  border-radius: var(--radius-full);
+  font-size: 0.72rem;
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.question-text-box {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  text-align: center;
+}
+
+.question-subtitle {
+  font-size: 0.78rem;
+  color: var(--c-primary);
+  font-weight: 700;
+}
+
+.question-title {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--text-main);
+  line-height: 1.4;
+}
+
+/* شريط أدوات المساعدة والتلميحات */
+.hints-toolbar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  margin: 4px 0;
+}
+
+.hint-tool-btn {
+  background: var(--bg-card);
+  border: 1px solid var(--border-glass);
+  border-radius: var(--radius-full);
+  padding: 6px 14px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--text-main);
+  font-size: 0.78rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.hint-tool-btn:hover {
+  border-color: var(--c-gold);
+  transform: translateY(-2px);
+}
+
+.hint-tool-btn:active {
+  transform: translateY(0);
+}
+
+.hint-cost {
+  color: var(--c-gold);
+  font-size: 0.72rem;
+}
+
+/* =========================================================
+   النوع 1: تكوين الكلمة بالحروف المبعثرة (Scattered Letters)
+   ========================================================= */
+
+.word-puzzle-area {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+  margin-top: 6px;
+}
+
+/* مربعات الإجابة */
+.answer-slots-row {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  flex-wrap: wrap;
+  min-height: 52px;
+}
+
+.answer-slot {
+  width: 46px;
+  height: 50px;
+  border-radius: var(--radius-md);
+  background: rgba(15, 23, 42, 0.6);
+  border: 2px dashed rgba(251, 191, 36, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.35rem;
+  font-weight: 800;
+  color: #fff;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+  box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.5);
+}
+
+.answer-slot.filled {
+  background: linear-gradient(135deg, #d97706, #b45309);
+  border: 2px solid var(--c-gold);
+  box-shadow: 0 4px 12px rgba(217, 119, 6, 0.4);
+  animation: letterPop 0.25s ease-out;
+}
+
+.answer-slot.hinted {
+  border-color: #38bdf8;
+  background: linear-gradient(135deg, #0284c7, #0369a1);
+}
+
+/* بنك الحروف المبعثرة في الأسفل */
+.letters-pool-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+  max-width: 360px;
+}
+
+.letter-tile {
+  width: 44px;
+  height: 48px;
+  border-radius: var(--radius-md);
+  background: linear-gradient(180deg, #334155 0%, #1e293b 100%);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-bottom: 3px solid #0f172a;
+  color: var(--text-main);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.25rem;
+  font-weight: 800;
+  cursor: pointer;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.4);
+  transition: all 0.15s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.letter-tile:hover {
+  transform: translateY(-2px);
+  border-color: var(--c-gold);
+  color: var(--text-gold);
+}
+
+.letter-tile:active {
+  transform: translateY(2px);
+  border-bottom-width: 1px;
+}
+
+.letter-tile.used {
+  opacity: 0.15;
+  pointer-events: none;
+  transform: scale(0.9);
+}
+
+.letter-tile.hidden-by-hint {
+  display: none;
+}
+
+/* =========================================================
+   النوع 2 و 3: اختيار من متعدد / من أي ولاية؟
+   ========================================================= */
+
+.quiz-options-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 10px;
+  width: 100%;
+}
+
+.quiz-option-btn {
+  background: var(--bg-card);
+  border: 1px solid var(--border-glass);
+  border-radius: var(--radius-md);
+  padding: 14px 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: var(--text-main);
+  font-family: var(--font-sans);
+  font-size: 0.95rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  text-align: right;
+  position: relative;
+  overflow: hidden;
+}
+
+.quiz-option-btn:hover {
+  background: var(--bg-card-hover);
+  border-color: var(--c-gold);
+  transform: translateX(-4px);
+}
+
+.quiz-option-letter {
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radius-full);
+  background: rgba(255, 255, 255, 0.08);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.85rem;
+  font-weight: 800;
+  color: var(--c-gold);
+  flex-shrink: 0;
+}
+
+.quiz-option-btn.correct {
+  background: linear-gradient(135deg, #059669, #047857) !important;
+  border-color: #34d399 !important;
+  color: white;
+  animation: celebratePulse 0.4s ease-out;
+}
+
+.quiz-option-btn.wrong {
+  background: linear-gradient(135deg, #dc2626, #b91c1c) !important;
+  border-color: #f87171 !important;
+  color: white;
+  animation: shakeX 0.4s ease-in-out;
+}
+
+/* =========================================================
+   النوع 4: أكمل الحروف الناقصة
+   ========================================================= */
+
+.missing-pattern-display {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  font-size: 1.8rem;
+  font-weight: 900;
+  color: var(--c-gold);
+  letter-spacing: 4px;
+  padding: 16px;
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: var(--radius-md);
+  border: 1px dashed var(--border-gold);
+}
+
+/* =========================================================
+   النوع 5: لعبة المطابقة (Matching Cards Grid)
+   ========================================================= */
+
+.matching-game-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  width: 100%;
+}
+
+.match-card-btn {
+  background: var(--bg-card);
+  border: 2px solid var(--border-glass);
+  border-radius: var(--radius-md);
+  padding: 14px 10px;
+  color: var(--text-main);
+  font-family: var(--font-sans);
+  font-size: 0.88rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  min-height: 64px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.match-card-btn:hover {
+  border-color: var(--c-primary);
+}
+
+.match-card-btn.selected {
+  border-color: var(--c-gold);
+  background: rgba(217, 119, 6, 0.25);
+  box-shadow: 0 0 15px rgba(251, 191, 36, 0.4);
+  transform: scale(1.02);
+}
+
+.match-card-btn.matched {
+  background: rgba(16, 185, 129, 0.2);
+  border-color: #10b981;
+  color: #34d399;
+  pointer-events: none;
+  opacity: 0.85;
+}
+
+/* تنبيه الخطأ السفلي */
+.error-shake-banner {
+  background: rgba(220, 38, 38, 0.9);
+  color: white;
+  padding: 8px 16px;
+  border-radius: var(--radius-full);
+  font-size: 0.82rem;
+  font-weight: 700;
+  text-align: center;
+  display: none;
+  animation: shakeX 0.4s ease-in-out;
+}
+
+.error-shake-banner.show {
+  display: block;
+}

@@ -1,0 +1,415 @@
+/* =========================================================
+   كنوز الجزائر - خريطة الاستكشاف ومسار الولايات الـ 58
+   ========================================================= */
+
+.map-container {
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* بطاقة البانر الترحيبية الفاخرة */
+.hero-banner-card {
+  position: relative;
+  width: 100%;
+  height: 190px;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-card);
+  border: 1px solid var(--border-gold);
+  background: #000;
+}
+
+.hero-banner-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: brightness(0.75);
+  transition: transform 0.5s ease;
+}
+
+.hero-banner-card:hover .hero-banner-img {
+  transform: scale(1.03);
+}
+
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(15, 23, 42, 0.2) 0%, rgba(15, 23, 42, 0.95) 100%);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 18px;
+  gap: 6px;
+}
+
+.hero-badge-pill {
+  align-self: flex-start;
+  background: rgba(217, 119, 6, 0.85);
+  color: white;
+  padding: 3px 10px;
+  border-radius: var(--radius-full);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  backdrop-filter: blur(5px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.hero-title {
+  font-family: var(--font-display);
+  font-size: 1.55rem;
+  font-weight: 700;
+  color: #fff;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8);
+}
+
+.hero-desc {
+  font-size: 0.82rem;
+  color: #cbd5e1;
+  line-height: 1.35;
+}
+
+/* شريط التحدي اليومي السريع وصندوق المفاجآت */
+.quick-features-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.quick-feature-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-glass);
+  border-radius: var(--radius-md);
+  padding: 12px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.quick-feature-card:hover {
+  background: var(--bg-card-hover);
+  border-color: var(--c-primary);
+  transform: translateY(-2px);
+}
+
+.quick-feature-card:active {
+  transform: translateY(0);
+}
+
+.qf-icon {
+  font-size: 1.7rem;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.4));
+}
+
+.qf-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.qf-title {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--text-main);
+}
+
+.qf-sub {
+  font-size: 0.72rem;
+  color: var(--c-gold);
+  font-weight: 600;
+}
+
+/* شريط البحث وتصفية المناطق */
+.search-filter-section {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.search-box {
+  position: relative;
+  width: 100%;
+}
+
+.search-input {
+  width: 100%;
+  background: var(--bg-card);
+  border: 1px solid var(--border-glass);
+  border-radius: var(--radius-md);
+  padding: 10px 38px 10px 14px;
+  color: var(--text-main);
+  font-family: var(--font-sans);
+  font-size: 0.88rem;
+  outline: none;
+  transition: border-color 0.2s ease;
+}
+
+.search-input:focus {
+  border-color: var(--c-primary);
+  box-shadow: 0 0 10px rgba(217, 119, 6, 0.3);
+}
+
+.search-icon {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-muted);
+  font-size: 0.95rem;
+}
+
+.region-chips {
+  display: flex;
+  gap: 6px;
+  overflow-x: auto;
+  padding-bottom: 4px;
+  scrollbar-width: none;
+}
+
+.region-chips::-webkit-scrollbar {
+  display: none;
+}
+
+.region-chip {
+  background: var(--bg-card);
+  border: 1px solid var(--border-glass);
+  color: var(--text-muted);
+  padding: 6px 14px;
+  border-radius: var(--radius-full);
+  font-size: 0.75rem;
+  font-weight: 600;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.region-chip.active {
+  background: var(--c-primary);
+  border-color: var(--c-gold);
+  color: white;
+  box-shadow: 0 2px 8px rgba(217, 119, 6, 0.4);
+}
+
+/* مسار وبطاقات الولايات */
+.wilayas-journey-list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  position: relative;
+}
+
+/* خط المسار الواصل بين الولايات */
+.wilayas-journey-list::before {
+  content: '';
+  position: absolute;
+  top: 30px;
+  bottom: 30px;
+  right: 28px;
+  width: 3px;
+  background: linear-gradient(180deg, var(--c-gold) 0%, rgba(217, 119, 6, 0.4) 50%, rgba(255, 255, 255, 0.1) 100%);
+  z-index: 1;
+}
+
+.wilaya-card {
+  position: relative;
+  z-index: 2;
+  border-radius: var(--radius-lg);
+  background: var(--bg-card);
+  border: 1px solid var(--border-glass);
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  box-shadow: var(--shadow-card);
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  overflow: hidden;
+}
+
+.wilaya-card.unlocked {
+  border-color: var(--border-gold);
+}
+
+.wilaya-card.unlocked:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 30px -5px rgba(217, 119, 6, 0.25);
+}
+
+.wilaya-card.current {
+  border-color: var(--c-gold);
+  box-shadow: 0 0 20px rgba(251, 191, 36, 0.35);
+}
+
+.wilaya-card.locked {
+  opacity: 0.65;
+  filter: grayscale(0.4);
+  background: rgba(15, 23, 42, 0.6);
+}
+
+.wilaya-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.wilaya-main-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.wilaya-num-badge {
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-md);
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.03));
+  border: 1px solid var(--border-glass);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: var(--text-gold);
+  flex-shrink: 0;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+.wilaya-card.unlocked .wilaya-num-badge {
+  background: linear-gradient(135deg, var(--c-primary), var(--c-primary-dark));
+  color: white;
+  border-color: var(--c-gold);
+}
+
+.wilaya-titles {
+  display: flex;
+  flex-direction: column;
+}
+
+.wilaya-name {
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: var(--text-main);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.wilaya-region-tag {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+}
+
+.wilaya-status-pill {
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: var(--radius-full);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.status-completed {
+  background: rgba(16, 185, 129, 0.2);
+  color: #34d399;
+  border: 1px solid rgba(16, 185, 129, 0.4);
+}
+
+.status-current {
+  background: rgba(217, 119, 6, 0.25);
+  color: #fde047;
+  border: 1px solid var(--c-gold);
+}
+
+.status-locked {
+  background: rgba(148, 163, 184, 0.1);
+  color: #94a3b8;
+  border: 1px solid rgba(148, 163, 184, 0.2);
+}
+
+/* تفاصيل وسام الولاية والتراث */
+.wilaya-badge-preview {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(0, 0, 0, 0.25);
+  padding: 8px 12px;
+  border-radius: var(--radius-md);
+  font-size: 0.8rem;
+  color: #cbd5e1;
+}
+
+.w-badge-icon {
+  font-size: 1.3rem;
+}
+
+.w-badge-text {
+  font-weight: 600;
+  color: var(--text-gold);
+}
+
+/* شريط التقدم للولاية */
+.wilaya-progress-box {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.progress-header {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--text-muted);
+}
+
+.progress-bar-bg {
+  width: 100%;
+  height: 8px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+}
+
+.progress-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--c-primary), var(--c-gold));
+  border-radius: var(--radius-full);
+  transition: width 0.4s ease;
+}
+
+/* زر بدء استكشاف الولاية */
+.wilaya-action-btn {
+  width: 100%;
+  padding: 10px;
+  border-radius: var(--radius-md);
+  font-size: 0.9rem;
+  font-weight: 700;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: all 0.2s ease;
+}
+
+.wilaya-card.unlocked .wilaya-action-btn {
+  background: linear-gradient(135deg, var(--c-primary), #ea580c);
+  color: white;
+  box-shadow: 0 4px 12px rgba(217, 119, 6, 0.35);
+}
+
+.wilaya-card.unlocked .wilaya-action-btn:hover {
+  filter: brightness(1.1);
+}
+
+.wilaya-card.locked .wilaya-action-btn {
+  background: rgba(255, 255, 255, 0.05);
+  color: #64748b;
+  cursor: not-allowed;
+}

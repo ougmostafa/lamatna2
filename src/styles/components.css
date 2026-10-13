@@ -1,0 +1,365 @@
+/* =========================================================
+   كنوز الجزائر - النوافذ المنبثقة، عجلة الحظ، وبطاقة "هل تعلم؟"
+   ========================================================= */
+
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.modal-backdrop.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.modal-card {
+  width: 100%;
+  max-width: 420px;
+  background: linear-gradient(180deg, #1e293b 0%, #0f172a 100%);
+  border: 1px solid var(--border-gold);
+  border-radius: var(--radius-lg);
+  padding: 22px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.8), 0 0 30px rgba(217, 119, 6, 0.2);
+  transform: translateY(20px) scale(0.95);
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  position: relative;
+  overflow: hidden;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+.modal-backdrop.active .modal-card {
+  transform: translateY(0) scale(1);
+}
+
+.modal-close-btn {
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radius-full);
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid var(--border-glass);
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 1.1rem;
+  transition: all 0.2s ease;
+}
+
+.modal-close-btn:hover {
+  background: rgba(239, 68, 68, 0.2);
+  color: #f87171;
+}
+
+/* =========================================================
+   بطاقة "هل تعلم؟" التراثية والاحتفال
+   ========================================================= */
+
+.fact-header-badge {
+  background: linear-gradient(135deg, #f59e0b, #d97706);
+  color: #1e1b4b;
+  font-weight: 800;
+  padding: 6px 18px;
+  border-radius: var(--radius-full);
+  font-size: 0.85rem;
+  box-shadow: 0 4px 15px rgba(245, 158, 11, 0.4);
+  letter-spacing: 0.5px;
+}
+
+.stars-earned-row {
+  display: flex;
+  gap: 8px;
+  font-size: 2.2rem;
+  margin-top: -6px;
+}
+
+.star-icon-anim {
+  animation: starPop 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+.fact-content-box {
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid var(--border-glass);
+  border-radius: var(--radius-md);
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+  text-align: right;
+}
+
+.fact-title {
+  font-size: 1rem;
+  font-weight: 800;
+  color: var(--text-gold);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.fact-text {
+  font-size: 0.88rem;
+  color: #e2e8f0;
+  line-height: 1.6;
+}
+
+.rewards-display-row {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  width: 100%;
+}
+
+.reward-tag {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--border-glass);
+  padding: 6px 14px;
+  border-radius: var(--radius-full);
+  font-size: 0.85rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.reward-tag.gold {
+  color: var(--text-gold);
+  border-color: rgba(251, 191, 36, 0.4);
+}
+
+.reward-tag.gem {
+  color: #67e8f9;
+  border-color: rgba(6, 182, 212, 0.4);
+}
+
+/* =========================================================
+   عجلة الحظ (Wheel of Fortune)
+   ========================================================= */
+
+.wheel-wrapper {
+  position: relative;
+  width: 280px;
+  height: 280px;
+  margin: 10px 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#wheel-canvas {
+  width: 280px;
+  height: 280px;
+  border-radius: var(--radius-full);
+  box-shadow: 0 0 25px rgba(217, 119, 6, 0.5), inset 0 0 15px rgba(0,0,0,0.5);
+  border: 4px solid var(--c-gold);
+}
+
+.wheel-pointer {
+  position: absolute;
+  top: -12px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 0;
+  border-left: 14px solid transparent;
+  border-right: 14px solid transparent;
+  border-top: 24px solid #ef4444;
+  filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.6));
+  z-index: 10;
+}
+
+.wheel-center-pin {
+  position: absolute;
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-full);
+  background: radial-gradient(circle, #fde047 0%, #b45309 100%);
+  border: 3px solid #fff;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.6);
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+}
+
+/* =========================================================
+   المكافأة اليومية (7-Day Streak Calendar)
+   ========================================================= */
+
+.daily-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+  width: 100%;
+}
+
+.daily-day-card {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--border-glass);
+  border-radius: var(--radius-md);
+  padding: 10px 6px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  text-align: center;
+}
+
+.daily-day-card.active {
+  border-color: var(--c-gold);
+  background: rgba(217, 119, 6, 0.2);
+  box-shadow: 0 0 15px rgba(251, 191, 36, 0.3);
+  transform: scale(1.05);
+}
+
+.daily-day-card.claimed {
+  opacity: 0.5;
+  filter: grayscale(0.5);
+}
+
+.daily-day-card:nth-child(7) {
+  grid-column: span 2;
+  background: linear-gradient(135deg, rgba(217, 119, 6, 0.3), rgba(225, 29, 72, 0.3));
+  border-color: var(--c-gold);
+}
+
+.day-label {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+}
+
+.day-icon {
+  font-size: 1.4rem;
+}
+
+.day-reward-text {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--text-gold);
+}
+
+/* =========================================================
+   صندوق الهدايا والمفاجآت
+   ========================================================= */
+
+.chest-visual-box {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  margin: 10px 0;
+}
+
+.chest-icon-large {
+  font-size: 4.5rem;
+  filter: drop-shadow(0 10px 20px rgba(217, 119, 6, 0.6));
+  animation: floatSlow 3s ease-in-out infinite;
+}
+
+/* =========================================================
+   لوحة المتصدرين وقائمة الإنجازات
+   ========================================================= */
+
+.modal-list-container {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+  max-height: 380px;
+  overflow-y: auto;
+  padding-left: 4px;
+}
+
+.list-item-card {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--border-glass);
+  border-radius: var(--radius-md);
+  padding: 10px 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.item-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.rank-badge {
+  width: 28px;
+  height: 28px;
+  border-radius: var(--radius-full);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.85rem;
+  font-weight: 800;
+}
+
+.rank-1 { background: #f59e0b; color: #1e1b4b; }
+.rank-2 { background: #94a3b8; color: #0f172a; }
+.rank-3 { background: #b45309; color: white; }
+.rank-other { background: rgba(255, 255, 255, 0.1); color: var(--text-muted); }
+
+.item-texts {
+  display: flex;
+  flex-direction: column;
+  text-align: right;
+}
+
+.item-title {
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--text-main);
+}
+
+.item-desc {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+}
+
+.claim-reward-btn {
+  background: linear-gradient(135deg, #059669, #047857);
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: var(--radius-full);
+  font-size: 0.75rem;
+  font-weight: 700;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+/* كانفاس الألعاب النارية والاحتفال */
+#confetti-canvas {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 150;
+  width: 100vw;
+  height: 100vh;
+}

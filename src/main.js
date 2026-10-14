@@ -13,8 +13,14 @@ import { StatsModal } from "./components/statsModal.js";
 import { ChestModal } from "./components/chestModal.js";
 import { MapView } from "./components/mapView.js";
 import { GameView } from "./components/gameView.js";
+import { InteractiveMap } from "./components/interactiveMap.js";
+import { WilayaInfoSheet } from "./components/wilayaInfoSheet.js";
 
 document.addEventListener("DOMContentLoaded", () => {
+  // ‎#app يستخدم backdrop-filter فيصبح حاوية للعناصر الثابتة (position: fixed)،
+  // لذا يُنقل شريط التنقل والنوافذ المنبثقة إلى body لتتموضع بالنسبة للشاشة لا لطول الصفحة
+  document.querySelectorAll(".bottom-nav, .modal-backdrop, #confetti-canvas").forEach((el) => document.body.appendChild(el));
+
   // تهيئة المؤثرات
   const confetti = new ConfettiEngine("confetti-canvas");
 
@@ -28,6 +34,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
   let gameView = null;
   let mapView = null;
+  let interactiveMap = null;
+  let infoSheet = null;
 
   // التنقل بين الشاشات
   const switchView = (viewName) => {
@@ -42,6 +50,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (viewName === "map" && mapView) {
       mapView.render();
+      interactiveMap?.refresh();
     }
   };
 
@@ -61,12 +70,29 @@ document.addEventListener("DOMContentLoaded", () => {
   // تهيئة شاشة اللعبة
   gameView = new GameView(factModal, () => switchView("map"));
 
-  // تهيئة شاشة الخريطة
-  mapView = new MapView((selectedWilaya) => {
+  const playWilaya = (selectedWilaya) => {
     store.getState().currentWilayaId = selectedWilaya.id;
     store.saveState();
     gameView.loadWilaya(selectedWilaya);
     switchView("game");
+  };
+
+  // الخريطة التفاعلية وبطاقة معلومات الولاية
+  interactiveMap = new InteractiveMap((code) => infoSheet.show(code));
+  infoSheet = new WilayaInfoSheet({
+    getBBox: (code) => interactiveMap.getBBox(code),
+    onPlay: playWilaya,
+    onNavigate: (code) => interactiveMap.select(code),
+    onClose: () => interactiveMap.clearSelection(),
+  });
+
+  // تهيئة شاشة الخريطة
+  mapView = new MapView(playWilaya, {
+    onFilter: (codes) => interactiveMap.setFilter(codes),
+    onInfo: (code) => {
+      interactiveMap.select(code);
+      infoSheet.show(code);
+    },
   });
 
   // تحديث عدادات الاقتصاد والرأس العلوي
@@ -88,6 +114,7 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   store.subscribe(updateHeaderUI);
+  store.subscribe(() => interactiveMap?.refresh());
   updateHeaderUI(store.getState());
 
   // أحداث الشريط السفلي

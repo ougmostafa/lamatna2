@@ -3,10 +3,13 @@
 import { WILAYAS_DATA } from "../data/wilayas.js";
 import { store } from "../state/store.js";
 import { sounds } from "../audio/audioEngine.js";
+import { WILAYAS_INFO } from "../data/wilayasInfo.js";
 
 export class MapView {
-  constructor(onSelectWilaya) {
+  constructor(onSelectWilaya, { onFilter, onInfo } = {}) {
     this.onSelectWilaya = onSelectWilaya;
+    this.onFilter = onFilter;
+    this.onInfo = onInfo;
     this.container = document.getElementById("wilayas-journey-list");
     this.searchInput = document.getElementById("wilaya-search-input");
     this.regionChips = document.querySelectorAll(".region-chip");
@@ -44,11 +47,16 @@ export class MapView {
 
     // تصفية الولايات حسب البحث والمنطقة
     const filtered = WILAYAS_DATA.filter((w) => {
+      const info = WILAYAS_INFO[w.id - 1];
+      const extra = info
+        ? [info.name_fr, info.name_en, info.capital, ...info.details.famous_landmarks].join(" ").toLowerCase()
+        : "";
       const matchSearch =
         !this.searchQuery ||
         w.name.toLowerCase().includes(this.searchQuery) ||
         w.code.includes(this.searchQuery) ||
-        w.famousFor.toLowerCase().includes(this.searchQuery);
+        w.famousFor.toLowerCase().includes(this.searchQuery) ||
+        extra.includes(this.searchQuery);
 
       const matchRegion =
         this.currentRegion === "all" ||
@@ -56,6 +64,8 @@ export class MapView {
 
       return matchSearch && matchRegion;
     });
+
+    this.onFilter?.(new Set(filtered.map((w) => w.id)));
 
     if (filtered.length === 0) {
       this.container.innerHTML = `
@@ -87,7 +97,8 @@ export class MapView {
               <span class="wilaya-region-tag">${wilaya.region}</span>
             </div>
           </div>
-          <div>
+          <div style="display:flex; align-items:center; gap:6px;">
+            <button class="wilaya-info-btn" data-info="${wilaya.id}">ℹ️ معلومات</button>
             ${
               isCompleted
                 ? `<span class="wilaya-status-pill status-completed">✓ مكتملة</span>`
@@ -136,6 +147,11 @@ export class MapView {
       `;
 
       // أحداث النقر
+      card.querySelector(".wilaya-info-btn")?.addEventListener("click", () => {
+        sounds.playLetterClick();
+        this.onInfo?.(wilaya.id);
+      });
+
       const btn = card.querySelector(".wilaya-action-btn");
       if (btn && isUnlocked) {
         btn.addEventListener("click", () => {

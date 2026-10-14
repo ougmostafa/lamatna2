@@ -13,6 +13,8 @@
   <link rel="stylesheet" href="/src/styles/map.css">
   <link rel="stylesheet" href="/src/styles/game.css">
   <link rel="stylesheet" href="/src/styles/components.css">
+  <link rel="stylesheet" href="/src/styles/interactiveMap.css">
+  <link rel="stylesheet" href="/src/styles/responsive.css">
 </head>
 <body>
 
@@ -61,6 +63,9 @@
       <section class="view-section active" id="view-map">
         <div class="map-container">
 
+          <!-- العمود الأول: البانر، الوصول السريع، البحث والقائمة -->
+          <div class="home-list-side">
+
           <!-- بطاقة البانر الترحيبية -->
           <div class="hero-banner-card">
             <img class="hero-banner-img" src="/assets/banner.jpg" alt="كنوز الجزائر التراثية">
@@ -89,6 +94,39 @@
             </div>
           </div>
 
+          </div>
+
+          <!-- العمود الثاني: خريطة الجزائر التفاعلية (ثابتة على الشاشات الكبيرة) -->
+          <div class="home-map-side">
+          <div class="imap-card">
+            <div class="imap-header">
+              <div class="imap-heading">
+                <h2 class="imap-title">🗺️ خريطة الجزائر التفاعلية</h2>
+                <span class="imap-sub">المس أي ولاية لاكتشاف تاريخها وتراثها</span>
+              </div>
+              <div class="imap-mode-toggle" role="group" aria-label="طريقة تلوين الخريطة">
+                <button class="imap-mode-btn active" data-mode="region">المناطق</button>
+                <button class="imap-mode-btn" data-mode="progress">تقدّمي</button>
+              </div>
+            </div>
+
+            <div class="imap-stage" id="imap-stage">
+              <svg class="imap-svg" id="imap-svg" role="img" aria-label="خريطة ولايات الجزائر الـ 58" preserveAspectRatio="xMidYMid meet"></svg>
+              <div class="imap-tooltip" id="imap-tooltip"></div>
+              <div class="imap-zoom-controls">
+                <button class="imap-zoom-btn" data-zoom="in" aria-label="تكبير">+</button>
+                <button class="imap-zoom-btn" data-zoom="out" aria-label="تصغير">−</button>
+                <button class="imap-zoom-btn" data-zoom="reset" aria-label="إعادة الضبط">⤢</button>
+              </div>
+              <span class="imap-hint">قرّب بإصبعين • اسحب للتنقل</span>
+            </div>
+
+            <div class="imap-legend" id="imap-legend"></div>
+          </div>
+          </div>
+
+          <div class="home-list-side home-list-rest">
+
           <!-- شريط البحث وتصفية المناطق -->
           <div class="search-filter-section">
             <div class="search-box">
@@ -110,6 +148,8 @@
           <!-- قائمة مسار الولايات -->
           <div class="wilayas-journey-list" id="wilayas-journey-list">
             <!-- تُبنى بطاقات الولايات هنا ديناميكياً -->
+          </div>
+
           </div>
 
         </div>
@@ -315,6 +355,15 @@
         </div>
 
         <button class="btn btn-gold" id="chest-open-btn" style="width:100%;">فتح صندوق الكنز! ✨</button>
+      </div>
+    </div>
+
+    <!-- بطاقة معلومات الولاية (تاريخ، أعلام، تقاليد، ثقافة، معالم) -->
+    <div class="modal-backdrop sheet-backdrop" id="wilaya-sheet-backdrop">
+      <div class="wilaya-sheet" id="wilaya-sheet-card" role="dialog" aria-modal="true" aria-labelledby="wilaya-sheet-title">
+        <div class="ws-handle" id="wilaya-sheet-handle"><span></span></div>
+        <button class="modal-close-btn ws-close" id="wilaya-sheet-close" aria-label="إغلاق">✕</button>
+        <div class="ws-body" id="wilaya-sheet-body"></div>
       </div>
     </div>
 

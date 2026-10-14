@@ -1,0 +1,391 @@
+/* =========================================================
+   كنوز الجزائر - التصميم المتجاوب (هواتف صغيرة، أجهزة لوحية، حواسيب)
+   ========================================================= */
+
+/* على الهاتف: أعمدة الصفحة الرئيسية شفافة، ويبقى الترتيب كما هو */
+.home-list-side,
+.home-map-side {
+  display: contents;
+}
+
+.main-viewport {
+  padding-bottom: calc(90px + env(safe-area-inset-bottom));
+}
+
+.bottom-nav {
+  padding-bottom: env(safe-area-inset-bottom);
+  height: calc(72px + env(safe-area-inset-bottom));
+}
+
+/* ---------- الهواتف الصغيرة (≤ 400px) ---------- */
+
+@media (max-width: 400px) {
+  .top-header {
+    padding: 8px 10px;
+    gap: 6px;
+  }
+
+  .player-details {
+    display: none;
+  }
+
+  .avatar-badge {
+    width: 36px;
+    height: 36px;
+    font-size: 1.1rem;
+  }
+
+  .economy-bar {
+    gap: 5px;
+  }
+
+  .eco-pill {
+    padding: 4px 8px;
+    font-size: 0.78rem;
+    gap: 3px;
+  }
+
+  .eco-icon {
+    font-size: 0.85rem;
+  }
+
+  .header-actions {
+    gap: 4px;
+  }
+
+  .header-btn {
+    width: 32px;
+    height: 32px;
+    font-size: 0.95rem;
+  }
+
+  .map-container {
+    padding: 12px;
+    gap: 14px;
+  }
+
+  .hero-banner-card {
+    height: 170px;
+  }
+
+  .hero-title {
+    font-size: 1.35rem;
+  }
+
+  .quick-features-row {
+    gap: 8px;
+  }
+
+  .imap-card {
+    padding: 10px;
+  }
+
+  .imap-header {
+    flex-wrap: wrap;
+  }
+
+  .imap-title {
+    font-size: 1rem;
+  }
+
+  .imap-zoom-btn {
+    width: 30px;
+    height: 30px;
+    font-size: 1rem;
+  }
+
+  .nav-item {
+    padding: 6px 6px;
+    font-size: 0.66rem;
+  }
+
+  .ws-name {
+    font-size: 1.45rem;
+  }
+
+  .ws-tab {
+    padding: 6px 9px;
+    font-size: 0.75rem;
+  }
+
+  .ws-nav {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .ws-nav-btn {
+    padding: 9px 8px;
+    font-size: 0.74rem;
+  }
+}
+
+/* ---------- الهواتف الأفقية والشاشات القصيرة ---------- */
+
+@media (max-height: 520px) and (orientation: landscape) {
+  .imap-stage {
+    aspect-ratio: auto;
+    height: 78vh;
+  }
+
+  .wilaya-sheet {
+    max-height: 96vh;
+    max-height: 96dvh;
+  }
+}
+
+/* ---------- الأجهزة اللوحية (≥ 700px) ---------- */
+
+@media (min-width: 700px) {
+  :root {
+    --app-max-width: 880px;
+  }
+
+  .map-container {
+    padding: 22px;
+    gap: 20px;
+  }
+
+  .hero-banner-card {
+    height: 240px;
+  }
+
+  .hero-overlay {
+    padding: 26px;
+  }
+
+  .hero-title {
+    font-size: 2.1rem;
+  }
+
+  .hero-desc {
+    font-size: 0.95rem;
+    max-width: 560px;
+  }
+
+  .imap-card {
+    padding: 18px;
+  }
+
+  .imap-title {
+    font-size: 1.3rem;
+  }
+
+  .imap-sub {
+    font-size: 0.82rem;
+  }
+
+  /* شبكة بطاقات الولايات بعمودين */
+  .wilayas-journey-list {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+    align-items: stretch;
+  }
+
+  .wilayas-journey-list::before {
+    display: none;
+  }
+
+  .wilaya-card .wilaya-action-btn {
+    margin-top: auto;
+  }
+
+  .wilayas-journey-list > div:only-child {
+    grid-column: 1 / -1;
+  }
+
+  .region-chips {
+    flex-wrap: wrap;
+    overflow: visible;
+  }
+
+  /* شريط التنقل العائم */
+  .bottom-nav {
+    max-width: 560px;
+    bottom: 14px;
+    border-radius: 24px;
+    border: 1px solid var(--border-glass);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.55);
+    height: 68px;
+    padding-bottom: 0;
+  }
+
+  .main-viewport {
+    padding-bottom: 110px;
+  }
+
+  /* شاشة اللعب في الوسط بعرض مريح */
+  .game-container {
+    max-width: 640px;
+    margin: 0 auto;
+    padding: 22px 16px;
+  }
+
+  /* بطاقة الولاية: نافذة سفلية أعرض */
+  .wilaya-sheet {
+    max-width: 640px;
+  }
+
+  .ws-hero {
+    padding: 34px 26px 22px;
+  }
+
+  .ws-name {
+    font-size: 2rem;
+  }
+
+  .ws-funfact,
+  .ws-game-box {
+    margin-inline: 24px;
+  }
+
+  .ws-panel,
+  .ws-nav {
+    padding-inline: 24px;
+  }
+
+  .ws-tabs {
+    padding-inline: 24px;
+  }
+
+  .ws-landmarks {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+/* ---------- الحواسيب (≥ 1100px) ---------- */
+
+@media (min-width: 1100px) {
+  :root {
+    --app-max-width: 1360px;
+    --header-h: 62px;
+  }
+
+  /* تمرير الصفحة نفسها حتى يعمل التثبيت (sticky) للخريطة */
+  .main-viewport {
+    overflow: visible;
+  }
+
+  .map-container {
+    display: grid;
+    grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+    grid-template-rows: auto 1fr;
+    grid-template-areas:
+      "map top"
+      "map rest";
+    gap: 22px 26px;
+    padding: 24px 28px;
+    align-items: start;
+  }
+
+  .home-list-side {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    grid-area: top;
+    min-width: 0;
+  }
+
+  .home-list-rest {
+    grid-area: rest;
+  }
+
+  .home-map-side {
+    display: block;
+    grid-area: map;
+    position: sticky;
+    top: calc(var(--header-h) + 20px);
+    min-width: 0;
+  }
+
+  /* الخريطة تملأ ارتفاع الشاشة المتاح */
+  .imap-card {
+    height: calc(100vh - var(--header-h) - 130px);
+    min-height: 520px;
+  }
+
+  .imap-stage {
+    flex: 1;
+    aspect-ratio: auto;
+    min-height: 0;
+  }
+
+  .hero-banner-card {
+    height: 210px;
+  }
+
+  .hero-title {
+    font-size: 2rem;
+  }
+
+  .search-filter-section {
+    position: sticky;
+    top: var(--header-h);
+    z-index: 5;
+    padding: 10px 0;
+    margin: -10px 0 0;
+    background: linear-gradient(180deg, rgba(15, 23, 42, 0.97) 75%, rgba(15, 23, 42, 0));
+  }
+
+  .wilayas-journey-list {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  /* بطاقة الولاية: درج جانبي يُبقي الخريطة ظاهرة وقابلة للنقر */
+  .sheet-backdrop {
+    /* flex-end في اتجاه RTL = الجهة اليسرى، فوق القائمة لا الخريطة */
+    justify-content: flex-end;
+    align-items: stretch;
+    background: transparent;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+
+  .sheet-backdrop.active {
+    pointer-events: none;
+  }
+
+  .sheet-backdrop .wilaya-sheet {
+    pointer-events: auto;
+    width: 460px;
+    max-width: 38vw;
+    max-height: none;
+    height: 100%;
+    border-radius: 0 24px 24px 0;
+    border: 1px solid var(--border-gold);
+    border-left: none;
+    transform: translateX(-105%);
+    box-shadow: 20px 0 60px -10px rgba(0, 0, 0, 0.75), 0 0 30px rgba(217, 119, 6, 0.15);
+  }
+
+  .modal-backdrop.active .wilaya-sheet {
+    transform: translateX(0);
+  }
+
+  .ws-handle {
+    display: none;
+  }
+
+  body.sheet-open {
+    overflow: auto;
+  }
+
+  .ws-hero {
+    padding-top: 26px;
+  }
+
+  .ws-landmarks {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+/* ---------- الشاشات العريضة جداً (≥ 1500px) ---------- */
+
+@media (min-width: 1500px) {
+  .wilayas-journey-list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .wilayas-journey-list::before {
+    display: none;
+  }
+}
